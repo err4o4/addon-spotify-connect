@@ -17,9 +17,12 @@ RUN \
         pulseaudio-dev=17.0-r5 \
         cmake=3.31.7-r1 \
         clang19-libclang=19.1.7-r6 \
+        pkgconf \
+        openssl-dev \
     \
     && apk add --no-cache \
         pulseaudio=17.0-r5 \
+        openssl \
     \
     && cargo install --force --locked bindgen-cli \
     && export PATH="$HOME/.cargo/bin:$PATH" \
