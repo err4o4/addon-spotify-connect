@@ -8,6 +8,11 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Setup base
 ARG LIBRESPOT_VERSION="0.7.0"
 # hadolint ignore=DL3003
+
+ENV OPENSSL_NO_PKG_CONFIG=1 \
+    OPENSSL_DIR=/usr
+
+
 RUN \
     apk add --no-cache --virtual .build-dependencies \
         build-base=0.5-r3 \
@@ -18,7 +23,6 @@ RUN \
         cmake=3.31.7-r1 \
         clang19-libclang=19.1.7-r6 \
         pkgconf \
-        openssl-dev~3.5.1 \
     \
     && apk add --no-cache \
         pulseaudio=17.0-r5 \
