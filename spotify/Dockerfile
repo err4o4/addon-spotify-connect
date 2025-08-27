@@ -8,11 +8,6 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Setup base
 ARG LIBRESPOT_VERSION="0.7.0"
 # hadolint ignore=DL3003
-
-ENV OPENSSL_NO_PKG_CONFIG=1 \
-    OPENSSL_DIR=/usr
-
-
 RUN \
     apk add --no-cache --virtual .build-dependencies \
         build-base=0.5-r3 \
@@ -26,14 +21,13 @@ RUN \
     \
     && apk add --no-cache \
         pulseaudio=17.0-r5 \
-        openssl \
     \
     && cargo install --force --locked bindgen-cli \
     && export PATH="$HOME/.cargo/bin:$PATH" \
     && cargo install \
         --locked \
         --no-default-features \
-        --features "pulseaudio-backend with-libmdns native-tls" \
+        --features "pulseaudio-backend with-libmdns rustls-tls" \
         --root /usr \
         --bin librespot \
         --version "${LIBRESPOT_VERSION}" \
